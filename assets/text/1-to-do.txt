@@ -1,0 +1,17 @@
+To Do for this app
+------------------
+- to check json.eng file
+- to app user color of theme
+-
+
+Structure of App
+
+-1 Home Page -  that display NCD diseases
+-2 Favorite Page - that display user saved disease
+-3 BMI Page - that calculate BMI of patients
+-4 Setting Page
+    - Notification
+    - Language
+    - About App
+    - About Us
+

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "835143220954",
+    "project_id": "ncds-9565a",
+    "storage_bucket": "ncds-9565a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:835143220954:android:fb9aec0a088dc0bb302fe3",
+        "android_client_info": {
+          "package_name": "com.yho.NCD.myanmar.ncd_myanmar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnK-Vt2MXYbk6xtS7CdqoHXSh_XQmNxpw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
