@@ -46,7 +46,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
 
   Future<List<Article>> _fetchArticle() async {
     try {
-      String githubRawUrl = '';
+      String githubRawUrl = 'https://raw.githubusercontent.com/yehtutoo2022/NCDs/master/assets/article_data.json';
       final response = await http.get(Uri.parse(githubRawUrl));
 
       if (response.statusCode == 200) {
