@@ -2,19 +2,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_locales/flutter_locales.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:hive/hive.dart';
 import 'package:ncd_myanmar/Page/Diseases/cervical_cancer_page.dart';
 import 'package:ncd_myanmar/Page/home_page.dart';
 import 'package:ncd_myanmar/home_bottom_menu.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Page/Diseases/cancer_page.dart';
-import 'Page/Diseases/cervical_cancer_page.dart';
 import 'Page/Diseases/diabetes_page.dart';
 import 'Page/Diseases/heart_disease_page.dart';
 import 'Page/Diseases/hypertension_page.dart';
 import 'Page/Diseases/stroke_page.dart';
-import 'home_bottom_menu.dart';
 import 'model/favorite_model.dart';
 
 Future<void> main() async {
