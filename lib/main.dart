@@ -17,20 +17,12 @@ import 'Page/Diseases/stroke_page.dart';
 import 'home_bottom_menu.dart';
 import 'model/favorite_model.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-
-  await Locales.init(
-      [
-        'en',
-        'my'
-      ]
-  );
-
+  await Locales.init(['en', 'my']);
 
   runApp(
     MultiProvider(
@@ -42,16 +34,13 @@ Future<void> main() async {
       child: MyApp(),
     ),
   );
-
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return LocaleBuilder(
       builder: (locale) => MaterialApp(
         title: 'NCDs',
@@ -67,7 +56,6 @@ class MyApp extends StatelessWidget {
           '/cancer': (context) => CancerScreen(),
           '/cervical-cancer': (context) => CervicalCancerScreen(),
         },
-
         debugShowCheckedModeBanner: false,
       ),
     );
