@@ -30,8 +30,6 @@ class _AboutAppScreenState extends State<AboutAppScreen> {
                   child: Image.asset('assets/splash.png'),
                 ),
                 const SizedBox(height: 10),
-
-
                 // const Text(
                 //   "App Name: Non-Communicable Diseases",
                 //   style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
