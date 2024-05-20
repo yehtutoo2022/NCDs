@@ -16,11 +16,11 @@ class _DeveloperProfileScreenState extends State<DeveloperProfileScreen> {
         title: Text(Locales.string(context, "about-dev")),
         backgroundColor: Colors.brown[100],
       ),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
 
               SizedBox(height: 40),
               CircleAvatar(
@@ -34,8 +34,8 @@ class _DeveloperProfileScreenState extends State<DeveloperProfileScreen> {
               ),
               SizedBox(height: 10),
               Text(
-                'Flutter Development for Health, Fitness and Education',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                'Software Development for Health and Education',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 10),

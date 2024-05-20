@@ -26,10 +26,16 @@ class _AboutAppScreenState extends State<AboutAppScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "App Name: Non-Communicable Diseases",
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                Center(
+                  child: Image.asset('assets/splash.png'),
                 ),
+                const SizedBox(height: 10),
+
+
+                // const Text(
+                //   "App Name: Non-Communicable Diseases",
+                //   style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                // ),
                 const SizedBox(height: 10),
                 const Text(
                   "Version: 1.3.0",
