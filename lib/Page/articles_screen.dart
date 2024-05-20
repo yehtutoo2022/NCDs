@@ -3,10 +3,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_locales/flutter_locales.dart';
 import 'package:http/http.dart' as http;
 import 'package:ncd_myanmar/Page/article_detail_screen.dart';
 import 'package:ncd_myanmar/model/article_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'bookmark_list.dart';
 
 class ArticleScreen extends StatefulWidget {
   @override
@@ -81,14 +84,26 @@ class _ArticleScreenState extends State<ArticleScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Articles',
+        title: Text(
+          Locales.string(context, "articles"),
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
           ),
         ),
-        backgroundColor: Colors.blue[800],
+        backgroundColor: Colors.brown[100],
+        actions: [
+          IconButton(
+            icon: Icon(Icons.bookmarks_outlined),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BookmarkScreen()),
+              );
+            },
+          ),
+        ],
       ),
+      backgroundColor: Colors.brown[100],
       //FutureBuilder is to show loading indicator while fetching from internet
       body: FutureBuilder<List<Article>>(
         future: _article,
@@ -132,13 +147,33 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                 ),
                               );
                             },
+                            // child: ClipRRect(
+                            //   borderRadius: BorderRadius.circular(8),
+                            //   child: Image.network(
+                            //     article![index].imageUrl,
+                            //     fit: BoxFit.cover,
+                            //     width: double.infinity,
+                            //     height: 200,
+                            //   ),
+                            // ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8),
-                              child: Image.network(
-                                article![index].imageUrl,
+                              child: CachedNetworkImage(
+                                imageUrl: article![index].imageUrl,
                                 fit: BoxFit.cover,
                                 width: double.infinity,
                                 height: 200,
+                                placeholder: (context, url) => Container(
+                                  width: double.infinity,
+                                  height: 200,
+                                  color: Colors.grey, // or any other placeholder design you prefer
+                                ),
+                                errorWidget: (context, url, error) => Container(
+                                  width: double.infinity,
+                                  height: 200,
+                                  color: Colors.grey, // or any other error widget you prefer
+                                  child: Icon(Icons.error, color: Colors.white), // optional error icon
+                                ),
                               ),
                             ),
                           ),

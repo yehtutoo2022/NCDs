@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_locales/flutter_locales.dart';
 import 'package:provider/provider.dart';
-import '../../model/favorite_model.dart';
+import '../../model/favorite_provider.dart';
 
 class CervicalCancerScreen extends StatefulWidget {
   const CervicalCancerScreen({super.key,});
@@ -23,7 +23,7 @@ class _CervicalCancerScreenState extends State<CervicalCancerScreen> {
   void initState() {
     super.initState();
     // Check if 'Hypertension' is in the favorites list
-    isBookmarked = Provider.of<FavoriteDataModel>(context, listen: false)
+    isBookmarked = Provider.of<FavoriteProvider>(context, listen: false)
         .favorites
         .contains('Cervical-Cancer');
   }
@@ -48,10 +48,10 @@ class _CervicalCancerScreenState extends State<CervicalCancerScreen> {
       isBookmarked = !isBookmarked;
       if (isBookmarked) {
         // Add item to favorites list
-        Provider.of<FavoriteDataModel>(context, listen: false).addFavorite('Cervical-Cancer');
+        Provider.of<FavoriteProvider>(context, listen: false).addFavorite('Cervical-Cancer');
       } else {
         // Remove item from favorites list
-        Provider.of<FavoriteDataModel>(context, listen: false).removeFavorite('Cervical-Cancer');
+        Provider.of<FavoriteProvider>(context, listen: false).removeFavorite('Cervical-Cancer');
       }
     });
     String message =

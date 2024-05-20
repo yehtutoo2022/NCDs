@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-class FavoriteDataModel extends ChangeNotifier {
+class FavoriteProvider extends ChangeNotifier {
   List<String> _favorites = [];
 
   // Getter for favorites
   List<String> get favorites => _favorites;
 
-  FavoriteDataModel() {
+  FavoriteProvider() {
     // Load favorites from shared preferences when the class is instantiated
     _loadFavorites();
   }

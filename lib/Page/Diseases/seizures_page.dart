@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_locales/flutter_locales.dart';
 import 'package:provider/provider.dart';
-import '../../model/favorite_model.dart';
+import '../../model/favorite_provider.dart';
 
 class SeizuresScreen extends StatefulWidget {
   const SeizuresScreen({super.key,});
@@ -22,7 +22,7 @@ class _SeizuresScreenState extends State<SeizuresScreen> {
   @override
   void initState() {
     super.initState();
-    isBookmarked = Provider.of<FavoriteDataModel>(context, listen: false)
+    isBookmarked = Provider.of<FavoriteProvider>(context, listen: false)
         .favorites
         .contains('Seizures');
   }
@@ -31,10 +31,10 @@ class _SeizuresScreenState extends State<SeizuresScreen> {
       isBookmarked = !isBookmarked;
       if (isBookmarked) {
         // Add item to favorites list
-        Provider.of<FavoriteDataModel>(context, listen: false).addFavorite('Seizures');
+        Provider.of<FavoriteProvider>(context, listen: false).addFavorite('Seizures');
       } else {
         // Remove item from favorites list
-        Provider.of<FavoriteDataModel>(context, listen: false).removeFavorite('Seizures');
+        Provider.of<FavoriteProvider>(context, listen: false).removeFavorite('Seizures');
       }
     });
     String message =

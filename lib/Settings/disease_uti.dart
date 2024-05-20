@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_locales/flutter_locales.dart';
 import 'package:provider/provider.dart';
-import '../../model/favorite_model.dart';
+import '../../model/favorite_provider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_locales/flutter_locales.dart';
 import 'package:provider/provider.dart';
-import '../../model/favorite_model.dart';
+import '../../model/favorite_provider.dart';
 
 double expansionTitleFontSize = 16.0;
 double expansionSubtitleFontSize = 14.0;

@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_locales/flutter_locales.dart';
 import 'package:provider/provider.dart';
-import '../../model/favorite_model.dart';
+import '../../model/favorite_provider.dart';
 
 class DiabetesScreen extends StatefulWidget {
   const DiabetesScreen({super.key,});
@@ -23,7 +23,7 @@ class _DiabetesScreenState extends State<DiabetesScreen> {
   void initState() {
     super.initState();
     // Check if 'Hypertension' is in the favorites list
-    isBookmarked = Provider.of<FavoriteDataModel>(context, listen: false)
+    isBookmarked = Provider.of<FavoriteProvider>(context, listen: false)
         .favorites
         .contains('Diabetes');
   }
@@ -32,10 +32,10 @@ class _DiabetesScreenState extends State<DiabetesScreen> {
       isBookmarked = !isBookmarked;
       if (isBookmarked) {
         // Add item to favorites list
-        Provider.of<FavoriteDataModel>(context, listen: false).addFavorite('Diabetes');
+        Provider.of<FavoriteProvider>(context, listen: false).addFavorite('Diabetes');
       } else {
         // Remove item from favorites list
-        Provider.of<FavoriteDataModel>(context, listen: false).removeFavorite('Diabetes');
+        Provider.of<FavoriteProvider>(context, listen: false).removeFavorite('Diabetes');
       }
     });
     String message =

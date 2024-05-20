@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ncd_myanmar/Page/articles_screen.dart';
 import 'Page/Drugs/drugs_page.dart';
 import 'Page/Drugs/drugs_json.dart';
 import 'Page/Tool/bmi_calculator.dart';
@@ -19,19 +20,10 @@ class _HomeMenuState extends State<HomeMenu> {
 
   final List<Widget> _screens = [
     HomeScreen(),
-    //TestFavoritesScreen,
-    // ReminderListScreen(reminders: reminders),
-   // AboutAppScreen(),
-   // FavoriteScreenPage(),
     FavoriteScreen(),
-    BMICalculatorScreen(),
-   // Drugs_JsonScreen(),
+    ArticleScreen(),
+   // BMICalculatorScreen(),
     SettingsPage(),
-   // FavoriteDrugsScreen(),
-  //  StretchableSliverAppBar(),
-  //  ReminderScreen(),
-   // MedicineHomePage()
-
   ];
 
   void _onItemTapped(int index) {
@@ -55,8 +47,8 @@ class _HomeMenuState extends State<HomeMenu> {
             label: 'Favorite',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.medical_services_rounded),
-            label: 'Tool',
+            icon: Icon(Icons.newspaper),
+            label: 'Articles',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),

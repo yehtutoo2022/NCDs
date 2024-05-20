@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_locales/flutter_locales.dart';
 import 'package:provider/provider.dart';
-import '../../model/favorite_model.dart';
+import '../../model/favorite_provider.dart';
 
 class HypertensionScreen extends StatefulWidget {
     const HypertensionScreen({super.key,});
@@ -23,7 +23,7 @@ class _HypertensionScreenState extends State<HypertensionScreen> {
   void initState() {
     super.initState();
     // Check if 'Hypertension' is in the favorites list
-    isBookmarked = Provider.of<FavoriteDataModel>(context, listen: false)
+    isBookmarked = Provider.of<FavoriteProvider>(context, listen: false)
         .favorites
         .contains('Hypertension');
   }
@@ -48,10 +48,10 @@ class _HypertensionScreenState extends State<HypertensionScreen> {
       isBookmarked = !isBookmarked;
       if (isBookmarked) {
         // Add item to favorites list
-        Provider.of<FavoriteDataModel>(context, listen: false).addFavorite('Hypertension');
+        Provider.of<FavoriteProvider>(context, listen: false).addFavorite('Hypertension');
       } else {
         // Remove item from favorites list
-        Provider.of<FavoriteDataModel>(context, listen: false).removeFavorite('Hypertension');
+        Provider.of<FavoriteProvider>(context, listen: false).removeFavorite('Hypertension');
       }
     });
     String message =

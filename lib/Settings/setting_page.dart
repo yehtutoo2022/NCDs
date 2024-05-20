@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_locales/flutter_locales.dart';
 import 'package:ncd_myanmar/Settings/theme_screen.dart';
+import '../Page/bookmark_list.dart';
 import 'about_app_screen.dart';
 import 'dev_screen.dart';
 import 'language_screen.dart';
@@ -19,7 +20,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          Locales.string(context, "setting"),
+          Locales.string(context, "more"),
         ),
         backgroundColor: Colors.brown[100],
         // leading: GestureDetector(
@@ -34,18 +35,13 @@ class _SettingsPageState extends State<SettingsPage> {
         child: ListView(
           children: [
             ListTile(
+              leading: Icon(Icons.notifications),
               title: Text(
                 Locales.string(context, "notifications"),
               ),
-              trailing: Switch(
-                value: enableNotifications,
-                onChanged: (value) {
-                  setState(() {
-                    enableNotifications = value;
-                  });
-                },
-              ),
+              trailing: Icon(Icons.keyboard_arrow_right),
             ),
+            Divider(color: Colors.grey), // Black divider
             // ListTile(
             //   title:  Text(
             //     Locales.string(context, "dark-mode"),
@@ -59,9 +55,28 @@ class _SettingsPageState extends State<SettingsPage> {
             //   },
             // ),
             ListTile(
+              leading: Icon(Icons.bookmark),
+              title: const Text('Bookmarks'),
+              trailing: Icon(Icons.keyboard_arrow_right),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>  BookmarkScreen()),
+                );
+              },
+            ),
+
+            const SizedBox(height: 16), // Add space before the next ListTile
+            const ListTile(
+              title: Text('Settings',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+            ),
+            ListTile(
+              leading: Icon(Icons.language),
               title: Text(
                 Locales.string(context, "change-language"),
               ),
+              trailing: Icon(Icons.keyboard_arrow_right),
               onTap: () {
                 // Navigate to the language selection screen
                 Navigator.push(
@@ -70,10 +85,13 @@ class _SettingsPageState extends State<SettingsPage> {
                 );
               },
             ),
+            Divider(color: Colors.grey), // Black divider
             ListTile(
+              leading: Icon(Icons.question_mark_outlined),
               title: Text(
                 Locales.string(context, "about-app"),
               ),
+              trailing: Icon(Icons.keyboard_arrow_right),
               onTap: () {
                 // Navigate to the language selection screen
                 Navigator.push(
@@ -82,10 +100,13 @@ class _SettingsPageState extends State<SettingsPage> {
                 );
               },
             ),
+            Divider(color: Colors.grey), // Black divider
             ListTile(
+              leading: Icon(Icons.face),
               title: Text(
                 Locales.string(context, "about-dev"),
               ),
+              trailing: Icon(Icons.keyboard_arrow_right),
               onTap: () {
                 Navigator.push(
                   context,
@@ -93,6 +114,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 );
               },
             ),
+            Divider(color: Colors.grey), // Black divider
             // ListTile(
             //   title: Text(
             //     Locales.string(context, "theme"),

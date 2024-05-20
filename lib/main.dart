@@ -5,6 +5,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:ncd_myanmar/Page/Diseases/cervical_cancer_page.dart';
 import 'package:ncd_myanmar/Page/home_page.dart';
 import 'package:ncd_myanmar/home_bottom_menu.dart';
+import 'package:ncd_myanmar/model/bookmark_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Page/Diseases/cancer_page.dart';
@@ -12,7 +13,7 @@ import 'Page/Diseases/diabetes_page.dart';
 import 'Page/Diseases/heart_disease_page.dart';
 import 'Page/Diseases/hypertension_page.dart';
 import 'Page/Diseases/stroke_page.dart';
-import 'model/favorite_model.dart';
+import 'model/favorite_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +26,10 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => FavoriteDataModel(),
+          create: (context) => FavoriteProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => BookmarkProvider(),
         ),
       ],
       child: MyApp(),

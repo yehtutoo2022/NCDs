@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_locales/flutter_locales.dart';
 import 'package:provider/provider.dart';
-import '../../model/favorite_model.dart';
+import '../../model/favorite_provider.dart';
 
 class CancerScreen extends StatefulWidget {
   const CancerScreen({super.key,});
@@ -23,7 +23,7 @@ class _CancerScreenState extends State<CancerScreen> {
   @override
   void initState() {
     super.initState();
-    isBookmarked = Provider.of<FavoriteDataModel>(context, listen: false)
+    isBookmarked = Provider.of<FavoriteProvider>(context, listen: false)
         .favorites
         .contains('Cancer');
   }
@@ -47,9 +47,9 @@ class _CancerScreenState extends State<CancerScreen> {
     setState(() {
       isBookmarked = !isBookmarked;
       if (isBookmarked) {
-        Provider.of<FavoriteDataModel>(context, listen: false).addFavorite('Cancer');
+        Provider.of<FavoriteProvider>(context, listen: false).addFavorite('Cancer');
       } else {
-        Provider.of<FavoriteDataModel>(context, listen: false).removeFavorite('Cancer');
+        Provider.of<FavoriteProvider>(context, listen: false).removeFavorite('Cancer');
       }
     });
     String message =

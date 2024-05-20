@@ -51,4 +51,10 @@ class BookmarkProvider with ChangeNotifier {
     _saveBookmark();
     notifyListeners();
   }
+
+  void deleteBookmark (Article article) {
+    _bookmark.remove(article);
+    _saveBookmark();
+    notifyListeners();
+  }
 }

@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_locales/flutter_locales.dart';
 import 'package:provider/provider.dart';
-import '../../model/favorite_model.dart';
+import '../../model/favorite_provider.dart';
 
 import 'dart:typed_data';
 
@@ -24,7 +24,7 @@ class _AsthmaScreenState extends State<AsthmaScreen> {
   @override
   void initState() {
     super.initState();
-    isBookmarked = Provider.of<FavoriteDataModel>(context, listen: false)
+    isBookmarked = Provider.of<FavoriteProvider>(context, listen: false)
         .favorites
         .contains('Asthma');
   }
@@ -33,10 +33,10 @@ class _AsthmaScreenState extends State<AsthmaScreen> {
       isBookmarked = !isBookmarked;
       if (isBookmarked) {
         // Add item to favorites list
-        Provider.of<FavoriteDataModel>(context, listen: false).addFavorite('Asthma');
+        Provider.of<FavoriteProvider>(context, listen: false).addFavorite('Asthma');
       } else {
         // Remove item from favorites list
-        Provider.of<FavoriteDataModel>(context, listen: false).removeFavorite('Asthma');
+        Provider.of<FavoriteProvider>(context, listen: false).removeFavorite('Asthma');
       }
     });
     String message =
