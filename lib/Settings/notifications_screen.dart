@@ -44,7 +44,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   Future<List<Noti>> _fetchNoti() async {
     try {
-      String githubRawUrl = ' ';
+      String githubRawUrl = 'https://raw.githubusercontent.com/yehtutoo2022/NCDs/master/assets/noti_data.json';
       final response = await http.get(Uri.parse(githubRawUrl));
 
       if (response.statusCode == 200) {
