@@ -7,6 +7,7 @@ import 'Page/favorite_page.dart';
 import 'Page/home_page.dart';
 import 'Settings/notifications_screen.dart';
 import 'Settings/setting_page.dart';
+import 'copy.dart';
 
 class HomeMenu extends StatefulWidget {
   const HomeMenu({super.key});
@@ -20,9 +21,8 @@ class _HomeMenuState extends State<HomeMenu> {
 
   final List<Widget> _screens = [
     HomeScreen(),
-    FavoriteScreen(),
     ArticleScreen(),
-   // BMICalculatorScreen(),
+    NotificationScreen(),
     SettingsPage(),
   ];
 
@@ -43,16 +43,16 @@ class _HomeMenuState extends State<HomeMenu> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favorite',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.newspaper),
             label: 'Articles',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
+            icon: Icon(Icons.notifications),
+            label: 'Notifications',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.menu),
+            label: 'More',
           ),
         ],
         currentIndex: _selectedIndex,

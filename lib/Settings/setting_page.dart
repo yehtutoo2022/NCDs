@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_locales/flutter_locales.dart';
+import 'package:ncd_myanmar/Page/favorite_page.dart';
 import 'package:ncd_myanmar/Settings/theme_screen.dart';
 import '../Page/bookmark_list.dart';
 import 'about_app_screen.dart';
@@ -36,20 +37,33 @@ class _SettingsPageState extends State<SettingsPage> {
         child: ListView(
           children: [
             ListTile(
-              leading: Icon(Icons.notifications),
+              leading: Icon(Icons.favorite),
               title: Text(
-                Locales.string(context, "notifications"),
+                Locales.string(context, "favorites"),
               ),
               trailing: Icon(Icons.keyboard_arrow_right),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => NotificationScreen()),
+                  MaterialPageRoute(builder: (context) => const FavoriteScreen()),
                 );
               },
-
             ),
-            Divider(color: Colors.grey), // Black divider
+            const Divider(color: Colors.grey),
+            ListTile(
+              leading: Icon(Icons.medical_information),
+              title: Text(
+                Locales.string(context, "bmi"),
+              ),
+              trailing: Icon(Icons.keyboard_arrow_right),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const FavoriteScreen()),
+                );
+              },
+            ),
+            const Divider(color: Colors.grey),
             // ListTile(
             //   title:  Text(
             //     Locales.string(context, "dark-mode"),
