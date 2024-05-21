@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_locales/flutter_locales.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,26 +23,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
     _noti = _fetchNoti();
   }
 
-  // Future<List<Noti>> _loadCachedNoti() async {
-  //   try {
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     String? cachedNoti = prefs.getString('cached_noti');
-  //
-  //     if (cachedNoti != null) {
-  //       List<dynamic> jsonList = jsonDecode(cachedNoti);
-  //       List<Noti> cachedNotiList = jsonList.map((e) => Noti.fromJson(e)).toList();
-  //       setState(() {
-  //         _isLoading = false;
-  //       });
-  //       return cachedNotiList;
-  //     }
-  //   } catch (e) {
-  //     print('Error loading cached notifications: $e');
-  //   }
-  //   // If cached data not found or error occurred, fetch it from the network
-  //   return _fetchNoti();
-  // }
-
   Future<List<Noti>> _fetchNoti() async {
     try {
       String githubRawUrl = 'https://raw.githubusercontent.com/yehtutoo2022/NCDs/master/assets/noti_data.json';
@@ -50,10 +31,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
       if (response.statusCode == 200) {
         List<dynamic> jsonList = jsonDecode(response.body);
         List<Noti> notiList = jsonList.map((e) => Noti.fromJson(e)).toList();
-
-        //to save with share preference
-        // SharedPreferences prefs = await SharedPreferences.getInstance();
-        // await prefs.setString('cached_noti', jsonEncode(jsonList));
 
         setState(() {
           _isLoading = false;
@@ -75,7 +52,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Notifications'),
+        title: Text(
+          Locales.string(context, "notifications"),
+        ),
       ),
       body: FutureBuilder<List<Noti>>(
         future: _noti,
