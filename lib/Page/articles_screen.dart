@@ -99,7 +99,10 @@ class _ArticleScreenState extends State<ArticleScreen> {
             child: ListBody(
               children: _categories.map((String category) {
                 return RadioListTile<String>(
-                  title: Text(category),
+                  title: Text(
+                      category,
+                      style: TextStyle(fontSize: 14)
+                  ),
                   value: category,
                   groupValue: _selectedCategory,
                   onChanged: (String? value) {

@@ -76,7 +76,9 @@ class _SettingsPageState extends State<SettingsPage> {
             // ),
             ListTile(
               leading: Icon(Icons.bookmark),
-              title: const Text('Bookmarks'),
+              title: Text(
+                Locales.string(context, "bookmarks"),
+              ),
               trailing: Icon(Icons.keyboard_arrow_right),
               onTap: () {
                 Navigator.push(
