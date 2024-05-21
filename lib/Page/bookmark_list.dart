@@ -49,7 +49,7 @@ class BookmarkScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          Locales.string(context, "bookmark"),
+          Locales.string(context, "bookmarks"),
           style: TextStyle(
             color: Colors.white,
           ),
