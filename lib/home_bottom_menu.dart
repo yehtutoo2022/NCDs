@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ncd_myanmar/Page/articles_screen.dart';
-import 'Page/Drugs/drugs_page.dart';
-import 'Page/Drugs/drugs_json.dart';
-import 'Page/Tool/bmi_calculator.dart';
-import 'Page/favorite_page.dart';
 import 'Page/home_page.dart';
 import 'Settings/notifications_screen.dart';
 import 'Settings/setting_page.dart';
-import 'copy.dart';
 
 class HomeMenu extends StatefulWidget {
   const HomeMenu({super.key});

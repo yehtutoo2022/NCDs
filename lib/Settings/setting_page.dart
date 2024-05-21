@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_locales/flutter_locales.dart';
 import 'package:ncd_myanmar/Page/favorite_page.dart';
-import 'package:ncd_myanmar/Settings/theme_screen.dart';
 import '../Page/bookmark_list.dart';
 import 'about_app_screen.dart';
 import 'dev_screen.dart';
 import 'language_screen.dart';
-import 'notifications_screen.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
