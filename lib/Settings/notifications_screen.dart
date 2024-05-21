@@ -19,28 +19,28 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   void initState() {
     super.initState();
-    _noti = _loadCachedNoti();
+    _noti = _fetchNoti();
   }
 
-  Future<List<Noti>> _loadCachedNoti() async {
-    try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? cachedNoti = prefs.getString('cached_noti');
-
-      if (cachedNoti != null) {
-        List<dynamic> jsonList = jsonDecode(cachedNoti);
-        List<Noti> cachedNotiList = jsonList.map((e) => Noti.fromJson(e)).toList();
-        setState(() {
-          _isLoading = false;
-        });
-        return cachedNotiList;
-      }
-    } catch (e) {
-      print('Error loading cached notifications: $e');
-    }
-    // If cached data not found or error occurred, fetch it from the network
-    return _fetchNoti();
-  }
+  // Future<List<Noti>> _loadCachedNoti() async {
+  //   try {
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //     String? cachedNoti = prefs.getString('cached_noti');
+  //
+  //     if (cachedNoti != null) {
+  //       List<dynamic> jsonList = jsonDecode(cachedNoti);
+  //       List<Noti> cachedNotiList = jsonList.map((e) => Noti.fromJson(e)).toList();
+  //       setState(() {
+  //         _isLoading = false;
+  //       });
+  //       return cachedNotiList;
+  //     }
+  //   } catch (e) {
+  //     print('Error loading cached notifications: $e');
+  //   }
+  //   // If cached data not found or error occurred, fetch it from the network
+  //   return _fetchNoti();
+  // }
 
   Future<List<Noti>> _fetchNoti() async {
     try {
@@ -51,8 +51,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
         List<dynamic> jsonList = jsonDecode(response.body);
         List<Noti> notiList = jsonList.map((e) => Noti.fromJson(e)).toList();
 
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('cached_noti', jsonEncode(jsonList));
+        //to save with share preference
+        // SharedPreferences prefs = await SharedPreferences.getInstance();
+        // await prefs.setString('cached_noti', jsonEncode(jsonList));
 
         setState(() {
           _isLoading = false;
