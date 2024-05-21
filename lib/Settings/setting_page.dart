@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_locales/flutter_locales.dart';
+import 'package:ncd_myanmar/Page/Tool/bmi_calculator.dart';
 import 'package:ncd_myanmar/Page/favorite_page.dart';
 import '../Page/bookmark_list.dart';
 import 'about_app_screen.dart';
@@ -57,7 +58,7 @@ class _SettingsPageState extends State<SettingsPage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const FavoriteScreen()),
+                  MaterialPageRoute(builder: (context) => const BMICalculatorScreen()),
                 );
               },
             ),
