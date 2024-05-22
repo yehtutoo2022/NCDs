@@ -1,11 +1,9 @@
-import 'dart:convert';
-
 class Video {
-  String category;
-  String source;
-  String title;
-  String content;
-  String videoUrl;
+  final String category;
+  final String source;
+  final String title;
+  final String content;
+  final String videoUrl;
 
   Video({
     required this.category,
@@ -17,22 +15,11 @@ class Video {
 
   factory Video.fromJson(Map<String, dynamic> json) {
     return Video(
-      category: json['Category'] as String,
-      source: json['Source'] as String,
-      title: json['Title'] as String,
-      content: json['Content'] as String,
-      videoUrl: json['Video Url'] as String,
+      category: json['category'],
+      source: json['source'],
+      title: json['title'],
+      content: json['content'],
+      videoUrl: json['videoUrl'],
     );
-  }
-
-  String toJsonString() {
-    Map<String, dynamic> jsonMap = {
-      "Category": category,
-      "Source": source,
-      "Title": title,
-      "Content": content,
-      "Video Url": videoUrl
-    };
-    return jsonEncode(jsonMap);
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_locales/flutter_locales.dart';
 import 'package:ncd_myanmar/Page/Tool/bmi_calculator.dart';
 import 'package:ncd_myanmar/Page/favorite_page.dart';
+import 'package:ncd_myanmar/Page/video_screen.dart';
 import '../Page/bookmark_list.dart';
 import 'about_app_screen.dart';
 import 'dev_screen.dart';
@@ -35,6 +36,20 @@ class _SettingsPageState extends State<SettingsPage> {
         color: Colors.brown[100],
         child: ListView(
           children: [
+            ListTile(
+              leading: Icon(Icons.movie),
+              title: Text(
+                Locales.string(context, "video"),
+              ),
+              trailing: Icon(Icons.keyboard_arrow_right),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => VideoScreen()),
+                );
+              },
+            ),
+            const Divider(color: Colors.grey),
             ListTile(
               leading: Icon(Icons.favorite),
               title: Text(
