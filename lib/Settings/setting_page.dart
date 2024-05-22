@@ -46,6 +46,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => VideoScreen()),
+                //  MaterialPageRoute(builder: (context) => YoutubePlayerScreen()),
                 );
               },
             ),

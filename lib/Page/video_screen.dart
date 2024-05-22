@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_locales/flutter_locales.dart';
-import 'package:flutter_youtube_view/flutter_youtube_view.dart';
 import 'package:http/http.dart' as http;
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import '../model/video_model.dart';
 
 class VideoScreen extends StatefulWidget {
@@ -73,7 +73,8 @@ class _VideoScreenState extends State<VideoScreen> {
             return ListView.builder(
               itemCount: videos!.length,
               itemBuilder: (context, index) {
-                return VideoCard(video: videos[index]);
+               return VideoCard(video: videos[index]);
+              //  return YoutubePlayerScreen(videoId: 'KVbOHGwy4gY');
               },
             );
           }
@@ -83,100 +84,87 @@ class _VideoScreenState extends State<VideoScreen> {
   }
 }
 
-
-class VideoCard extends StatefulWidget {
+class VideoCard extends StatelessWidget {
   final Video video;
 
-  VideoCard({required this.video});
+  const VideoCard({Key? key, required this.video}) : super(key: key);
 
   @override
-  _VideoCardState createState() => _VideoCardState();
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(video.title),
+      onTap: () {
+        // Navigate to the video player screen
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => YoutubePlayerScreen(videoId: video.videoId),
+          ),
+        );
+      },
+    );
+  }
+}
+// class YoutubePlayerScreen extends StatelessWidget {
+//   final String videoId;
+//
+//   const YoutubePlayerScreen({Key? key, required this.videoId}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Video Player'),
+//       ),
+//       body: Center(
+//         child: Text('Youtube Player for videoId: $videoId'), // Integrate Youtube Player here
+//       ),
+//     );
+//   }
+// }
+
+class YoutubePlayerScreen extends StatefulWidget {
+  final String videoId;
+
+  const YoutubePlayerScreen({super.key, required this.videoId});
+
+  @override
+  State<YoutubePlayerScreen> createState() => _YoutubePlayerScreenState();
 }
 
-class _VideoCardState extends State<VideoCard>
-    implements YouTubePlayerListener {
-  double _currentVideoSecond = 0.0;
-  String _playerState = "";
-  late FlutterYoutubeViewController _controller;
+class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
+  final _controller = YoutubePlayerController();
+ // String videoId = "KVbOHGwy4gY";
 
   @override
-  void onCurrentSecond(double second) {
-    print("onCurrentSecond second = $second");
-    setState(() {
-      _currentVideoSecond = second;
-    });
-  }
-
-  @override
-  void onError(String error) {
-    print("onError error = $error");
-  }
-
-  @override
-  void onReady() {
-    print("onReady");
-  }
-
-  @override
-  void onStateChange(String state) {
-    print("onStateChange state = $state");
-    setState(() {
-      _playerState = state;
-    });
-  }
-
-  @override
-  void onVideoDuration(double duration) {
-    print("onVideoDuration duration = $duration");
-  }
-
-  void _onYoutubeCreated(FlutterYoutubeViewController controller) {
-    _controller = controller;
-    print("onYoutubeCreated");
-  }
-
-  void _loadOrCueVideo() {
-    _controller.loadOrCueVideo(widget.video.videoUrl, _currentVideoSecond);
+  void initState() {
+    super.initState();
+    // TO load a video by its unique id
+   // _controller.loadVideoById(videoId: "KVbOHGwy4gY");
+    _controller.loadVideoById(videoId: widget.videoId);
   }
 
   @override
   Widget build(BuildContext context) {
-    String videoId = widget.video.videoUrl.split("v=")[1];
-    // Extract video ID from URL
-    return Card(
-      elevation: 3,
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      child: Column(
-        children: [
-          FlutterYoutubeView(
-            onViewCreated: _onYoutubeCreated,
-            listener: this,
-            params: YoutubeParam(
-              videoId: videoId,
-              showUI: true,
-              startSeconds: 0.0,
-              showYoutube: false,
-              showFullScreen: false,
-            ),
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+
+        child: Center(
+          // Youtube player as widget
+          child: YoutubePlayer(
+            controller: _controller, // Controler that we created earlier
+            aspectRatio: 16 / 9,	 // Aspect ratio you want to take in screen
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Text(
-                  'Current state: $_playerState',
-                  style: TextStyle(color: Colors.blue),
-                ),
-                ElevatedButton(
-                  onPressed: _loadOrCueVideo,
-                  child: Text('Click reload video'),
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
 }
+
+
+
+
+
+
 
