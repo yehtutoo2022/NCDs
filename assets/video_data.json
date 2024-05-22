@@ -4,13 +4,15 @@
     "Source": "Youtube",
     "Title": "Intro about Hypertension",
     "Content": "This is content of hypertension",
-    "Video Url": "https://www.youtube.com/watch?v=zHNKPuODkwQ"
+    "Video Url": "https://www.youtube.com/watch?v=zHNKPuODkwQ",
+    "Image Thumbnail": "https://i.ytimg.com/vi/rtPQHDWg-6M/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCZKAyNzCP13aMRjVjrmQ1Q6BC_Gg"
   },
   {
     "Category": "Hypetension",
     "Source": "Youtube",
     "Title": "Second Video",
     "Content": "Second Test",
-    "Video Url": "https://www.youtube.com/watch?v=74ykov5wqgg"
+    "Video Url": "https://www.youtube.com/watch?v=74ykov5wqgg",
+    "Image Thumbnail": "https://i.ytimg.com/vi/rtPQHDWg-6M/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCZKAyNzCP13aMRjVjrmQ1Q6BC_Gg"
   }
 ]

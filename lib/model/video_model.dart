@@ -30,6 +30,7 @@ class Video {
   final String content;
   final String videoUrl;
   final String videoId;
+  final String imageThumbnail;
 
   Video({
     required this.category,
@@ -38,6 +39,7 @@ class Video {
     required this.content,
     required this.videoUrl,
     required this.videoId,
+    required this.imageThumbnail,
   });
 
   factory Video.fromJson(Map<String, dynamic> json) {
@@ -48,6 +50,7 @@ class Video {
       content: json['Content'],
       videoUrl: json['Video Url'],
       videoId: _extractVideoId(json['Video Url']),
+      imageThumbnail: json['Image Thumbnail'],
     );
   }
 

@@ -65,7 +65,7 @@ class _VideoScreenState extends State<VideoScreen> {
               child: Text('Error: ${snapshot.error}'),
             );
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(
+            return const Center(
               child: Text('No video available'),
             );
           } else {
@@ -74,7 +74,6 @@ class _VideoScreenState extends State<VideoScreen> {
               itemCount: videos!.length,
               itemBuilder: (context, index) {
                return VideoCard(video: videos[index]);
-              //  return YoutubePlayerScreen(videoId: 'KVbOHGwy4gY');
               },
             );
           }
@@ -91,37 +90,36 @@ class VideoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(video.title),
-      onTap: () {
-        // Navigate to the video player screen
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => YoutubePlayerScreen(videoId: video.videoId),
+    String thumbnailUrl = 'https://img.youtube.com/vi/${video.videoId}/mqdefault.jpg';
+
+    return Card(
+      elevation: 2,
+      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      child: Column(
+        children: [
+          Image.network(
+            thumbnailUrl,
+            fit: BoxFit.cover,
+            width: double.infinity,
+            height: 200,
           ),
-        );
-      },
+          ListTile(
+            title: Text(video.title),
+            subtitle: Text(video.content),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => YoutubePlayerScreen(videoId: video.videoId),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }
-// class YoutubePlayerScreen extends StatelessWidget {
-//   final String videoId;
-//
-//   const YoutubePlayerScreen({Key? key, required this.videoId}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Video Player'),
-//       ),
-//       body: Center(
-//         child: Text('Youtube Player for videoId: $videoId'), // Integrate Youtube Player here
-//       ),
-//     );
-//   }
-// }
 
 class YoutubePlayerScreen extends StatefulWidget {
   final String videoId;
@@ -134,27 +132,25 @@ class YoutubePlayerScreen extends StatefulWidget {
 
 class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
   final _controller = YoutubePlayerController();
- // String videoId = "KVbOHGwy4gY";
 
   @override
   void initState() {
     super.initState();
-    // TO load a video by its unique id
-   // _controller.loadVideoById(videoId: "KVbOHGwy4gY");
     _controller.loadVideoById(videoId: widget.videoId);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Video View'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-
         child: Center(
-          // Youtube player as widget
           child: YoutubePlayer(
-            controller: _controller, // Controler that we created earlier
-            aspectRatio: 16 / 9,	 // Aspect ratio you want to take in screen
+            controller: _controller,
+            aspectRatio: 16 / 9,
           ),
         ),
       ),
