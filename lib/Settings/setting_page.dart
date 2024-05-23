@@ -39,7 +39,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ListTile(
               leading: Icon(Icons.movie),
               title: Text(
-                Locales.string(context, "video"),
+                Locales.string(context, "videos"),
               ),
               trailing: Icon(Icons.keyboard_arrow_right),
               onTap: () {

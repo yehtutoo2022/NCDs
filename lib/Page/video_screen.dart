@@ -51,7 +51,7 @@ class _VideoScreenState extends State<VideoScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          Locales.string(context, "video"),
+          Locales.string(context, "videos"),
         ),
       ),
       body: FutureBuilder<List<Video>>(
@@ -172,7 +172,7 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Video View'),
+        title: const Text(''),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
