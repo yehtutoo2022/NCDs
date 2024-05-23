@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_locales/flutter_locales.dart';
 import 'package:http/http.dart' as http;
+import 'package:ncd_myanmar/Page/video_card.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import '../model/video_model.dart';
 
@@ -18,14 +19,58 @@ class _VideoScreenState extends State<VideoScreen> {
   List<Video> _filteredVideos = [];
   String _selectedCategory = 'All';
   List<String> _categories = ['All'];
+//added
+  bool _isFetchingMore = false;
+  int _currentPage = 0;
+  final int _videosPerPage = 10;
+  final ScrollController _scrollController = ScrollController();
+
 
   @override
   void initState() {
     super.initState();
-    _video = _fetchVideo();
+   // _video = _fetchVideo();
+    _video = _fetchVideo(_currentPage);
+    _scrollController.addListener(_onScroll);
   }
 
-  Future<List<Video>> _fetchVideo() async {
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  // Future<List<Video>> _fetchVideo() async {
+  //   try {
+  //     String githubRawUrl = 'https://raw.githubusercontent.com/yehtutoo2022/NCDs/master/assets/video_data.json';
+  //     final response = await http.get(Uri.parse(githubRawUrl));
+  //
+  //     if (response.statusCode == 200) {
+  //       List<dynamic> jsonList = jsonDecode(response.body);
+  //       List<Video> videoList = jsonList.map((e) => Video.fromJson(e)).toList();
+  //
+  //       setState(() {
+  //         _isLoading = false;
+  //         _allVideos = videoList;
+  //         _filteredVideos = videoList;
+  //         _categories.addAll(
+  //           videoList.map((video) => video.category).toSet().toList(),
+  //         );
+  //       });
+  //       return videoList;
+  //     } else {
+  //       throw Exception('Failed to load video');
+  //     }
+  //   } catch (e) {
+  //     print('Error loading video: $e');
+  //     setState(() {
+  //       _isLoading = false;
+  //     });
+  //     return [];
+  //   }
+  // }
+
+  Future<List<Video>> _fetchVideo(int page) async {
     try {
       String githubRawUrl = 'https://raw.githubusercontent.com/yehtutoo2022/NCDs/master/assets/video_data.json';
       final response = await http.get(Uri.parse(githubRawUrl));
@@ -34,15 +79,25 @@ class _VideoScreenState extends State<VideoScreen> {
         List<dynamic> jsonList = jsonDecode(response.body);
         List<Video> videoList = jsonList.map((e) => Video.fromJson(e)).toList();
 
+        int start = page * _videosPerPage;
+        int end = start + _videosPerPage;
+        List<Video> paginatedVideos = videoList.sublist(start, end > videoList.length ? videoList.length : end);
+
         setState(() {
           _isLoading = false;
-          _allVideos = videoList;
-          _filteredVideos = videoList;
-          _categories.addAll(
-            videoList.map((video) => video.category).toSet().toList(),
-          );
+          if (page == 0) {
+            _allVideos = paginatedVideos;
+            _categories.addAll(
+              videoList.map((video) => video.category).toSet().toList(),
+            );
+            _categories.sort(); //sort alphabetically
+          } else {
+            _allVideos.addAll(paginatedVideos);
+          }
+          _filterVideos();
         });
-        return videoList;
+
+        return paginatedVideos;
       } else {
         throw Exception('Failed to load video');
       }
@@ -54,6 +109,7 @@ class _VideoScreenState extends State<VideoScreen> {
       return [];
     }
   }
+
 
   void _filterVideos() {
     if (_selectedCategory == 'All') {
@@ -75,7 +131,7 @@ class _VideoScreenState extends State<VideoScreen> {
                 return RadioListTile<String>(
                   title: Text(
                       category,
-                      style: TextStyle(fontSize: 14)
+                      style: const TextStyle(fontSize: 14)
                   ),
                   value: category,
                   groupValue: _selectedCategory,
@@ -97,8 +153,23 @@ class _VideoScreenState extends State<VideoScreen> {
 
   Future<void> _refreshVideos() async {
     setState(() {
-      _video = _fetchVideo();
+      _currentPage = 0;
+      _video = _fetchVideo(_currentPage);
     });
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent && !_isFetchingMore) {
+      setState(() {
+        _isFetchingMore = true;
+        _currentPage++;
+      });
+      _fetchVideo(_currentPage).then((_) {
+        setState(() {
+          _isFetchingMore = false;
+        });
+      });
+    }
   }
 
   @override
@@ -111,7 +182,7 @@ class _VideoScreenState extends State<VideoScreen> {
         backgroundColor: Colors.brown[100],
         actions: [
           IconButton(
-            icon: const Icon(Icons.filter_list),
+            icon: const Icon(Icons.filter_list_alt),
             onPressed: _showFilterDialog,
           ),
         ],
@@ -121,7 +192,7 @@ class _VideoScreenState extends State<VideoScreen> {
         future: _video,
         builder: (context, snapshot) {
           if (_isLoading) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (snapshot.hasError) {
@@ -137,8 +208,19 @@ class _VideoScreenState extends State<VideoScreen> {
             return RefreshIndicator(
               onRefresh: _refreshVideos,
               child: ListView.builder(
-                itemCount: _filteredVideos.length,
+                //added
+                controller: _scrollController,
+                itemCount: _filteredVideos.length + (_isFetchingMore ? 1 : 0),
+               // itemCount: _filteredVideos.length,
+               //  itemBuilder: (context, index) {
+               //    return VideoCard(video: _filteredVideos[index]);
+               //  },
                 itemBuilder: (context, index) {
+                  if (index == _filteredVideos.length) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
                   return VideoCard(video: _filteredVideos[index]);
                 },
               ),
@@ -150,120 +232,6 @@ class _VideoScreenState extends State<VideoScreen> {
   }
 }
 
-class VideoCard extends StatelessWidget {
-  final Video video;
-
-  const VideoCard({Key? key, required this.video}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-
-    return Card(
-      elevation: 2,
-      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      child: Column(
-        children: [
-
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => YoutubePlayerScreen(videoId: video.videoId),
-                ),
-              );
-            },
-            child: Stack(
-              children: [
-                Image.network(
-                  video.imageThumbnail,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: 200,
-                ),
-                Positioned(
-                  top: 0,
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Center(
-                    child: Icon(
-                      Icons.play_circle_outline,
-                      color: Colors.white,
-                      size: 64.0,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          ListTile(
-            title: Text(
-              video.title,
-              style: TextStyle(
-                fontSize: 18.0,
-                color: Colors.blue,
-              ),
-            ),
-            subtitle: Text(
-              video.content,
-              style: TextStyle(
-                fontSize: 14.0,
-                color: Colors.grey,
-              ),
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => YoutubePlayerScreen(videoId: video.videoId),
-                ),
-              );
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class YoutubePlayerScreen extends StatefulWidget {
-  final String videoId;
-
-  const YoutubePlayerScreen({super.key, required this.videoId});
-
-  @override
-  State<YoutubePlayerScreen> createState() => _YoutubePlayerScreenState();
-}
-
-class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
-  final _controller = YoutubePlayerController();
-
-  @override
-  void initState() {
-    super.initState();
-    _controller.loadVideoById(videoId: widget.videoId);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(''),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: YoutubePlayer(
-            controller: _controller,
-            aspectRatio: 16 / 9,
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 
 

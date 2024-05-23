@@ -9,6 +9,8 @@ import 'dev_screen.dart';
 import 'language_screen.dart';
 
 class SettingsPage extends StatefulWidget {
+  const SettingsPage({super.key});
+
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
@@ -25,23 +27,17 @@ class _SettingsPageState extends State<SettingsPage> {
           Locales.string(context, "more"),
         ),
         backgroundColor: Colors.brown[100],
-        // leading: GestureDetector(
-        //   child: const Icon(Icons.arrow_back_ios),
-        //   onTap: () {
-        //     Navigator.pop(context);
-        //   },
-        // ),
       ),
       body: Container(
         color: Colors.brown[100],
         child: ListView(
           children: [
             ListTile(
-              leading: Icon(Icons.notifications),
+              leading: const Icon(Icons.notifications),
               title: Text(
                 Locales.string(context, "notifications"),
               ),
-              trailing: Icon(Icons.keyboard_arrow_right),
+              trailing: const Icon(Icons.keyboard_arrow_right),
               onTap: () {
                 Navigator.push(
                   context,
@@ -51,11 +47,11 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             const Divider(color: Colors.grey),
             ListTile(
-              leading: Icon(Icons.favorite),
+              leading: const Icon(Icons.favorite),
               title: Text(
                 Locales.string(context, "favorites"),
               ),
-              trailing: Icon(Icons.keyboard_arrow_right),
+              trailing: const Icon(Icons.keyboard_arrow_right),
               onTap: () {
                 Navigator.push(
                   context,
@@ -65,11 +61,25 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             const Divider(color: Colors.grey),
             ListTile(
-              leading: Icon(Icons.medical_information),
+              leading: const Icon(Icons.bookmark),
+              title: Text(
+                Locales.string(context, "bookmarks"),
+              ),
+              trailing: const Icon(Icons.keyboard_arrow_right),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>  const BookmarkScreen()),
+                );
+              },
+            ),
+            const Divider(color: Colors.grey),
+            ListTile(
+              leading: const Icon(Icons.medical_information),
               title: Text(
                 Locales.string(context, "bmi"),
               ),
-              trailing: Icon(Icons.keyboard_arrow_right),
+              trailing: const Icon(Icons.keyboard_arrow_right),
               onTap: () {
                 Navigator.push(
                   context,
@@ -77,93 +87,55 @@ class _SettingsPageState extends State<SettingsPage> {
                 );
               },
             ),
-            const Divider(color: Colors.grey),
-            // ListTile(
-            //   title:  Text(
-            //     Locales.string(context, "dark-mode"),
-            //   ),
-            //   onTap: () {
-            //     // Navigate to the language selection screen
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (context) => ThemeScreen()),
-            //     );
-            //   },
-            // ),
-            ListTile(
-              leading: Icon(Icons.bookmark),
-              title: Text(
-                Locales.string(context, "bookmarks"),
-              ),
-              trailing: Icon(Icons.keyboard_arrow_right),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>  BookmarkScreen()),
-                );
-              },
-            ),
-
             const SizedBox(height: 16), // Add space before the next ListTile
             const ListTile(
               title: Text('Settings',
                   style: TextStyle(fontWeight: FontWeight.bold)),
             ),
             ListTile(
-              leading: Icon(Icons.language),
+              leading: const Icon(Icons.language),
               title: Text(
                 Locales.string(context, "change-language"),
               ),
-              trailing: Icon(Icons.keyboard_arrow_right),
+              trailing: const Icon(Icons.keyboard_arrow_right),
               onTap: () {
                 // Navigate to the language selection screen
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LanguageScreen()),
+                  MaterialPageRoute(builder: (context) => const LanguageScreen()),
                 );
               },
             ),
-            Divider(color: Colors.grey), // Black divider
+            const Divider(color: Colors.grey), // Black divider
             ListTile(
-              leading: Icon(Icons.question_mark_outlined),
+              leading: const Icon(Icons.question_mark_outlined),
               title: Text(
                 Locales.string(context, "about-app"),
               ),
-              trailing: Icon(Icons.keyboard_arrow_right),
+              trailing: const Icon(Icons.keyboard_arrow_right),
               onTap: () {
                 // Navigate to the language selection screen
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AboutAppScreen()),
+                  MaterialPageRoute(builder: (context) => const AboutAppScreen()),
                 );
               },
             ),
-            Divider(color: Colors.grey), // Black divider
+            const Divider(color: Colors.grey), // Black divider
             ListTile(
-              leading: Icon(Icons.face),
+              leading: const Icon(Icons.face),
               title: Text(
                 Locales.string(context, "about-dev"),
               ),
-              trailing: Icon(Icons.keyboard_arrow_right),
+              trailing: const Icon(Icons.keyboard_arrow_right),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => DeveloperProfileScreen()),
+                  MaterialPageRoute(builder: (context) => const DeveloperProfileScreen()),
                 );
               },
             ),
-            Divider(color: Colors.grey), // Black divider
-            // ListTile(
-            //   title: Text(
-            //     Locales.string(context, "theme"),
-            //   ),
-            //   onTap: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (context) => ThemeScreen()),
-            //     );
-            //   },
-            // ),
+            const Divider(color: Colors.grey), // Black divider
           ],
         ),
       ),

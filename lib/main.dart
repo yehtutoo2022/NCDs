@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_locales/flutter_locales.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:ncd_myanmar/Page/Diseases/cervical_cancer_page.dart';
-import 'package:ncd_myanmar/Page/home_page.dart';
+import 'package:ncd_myanmar/Page/all_ncd_page.dart';
 import 'package:ncd_myanmar/home_bottom_menu.dart';
 import 'package:ncd_myanmar/model/bookmark_provider.dart';
 import 'package:provider/provider.dart';

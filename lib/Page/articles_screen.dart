@@ -1,12 +1,11 @@
 import 'dart:convert';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_locales/flutter_locales.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/article_model.dart';
-import 'article_detail_screen.dart';
+import 'article_card.dart';
 import 'bookmark_list.dart';
 
 class ArticleScreen extends StatefulWidget {
@@ -19,11 +18,17 @@ class _ArticleScreenState extends State<ArticleScreen> {
   bool _isLoading = true;
   String _selectedCategory = 'All';
   List<String> _categories = ['All'];
+  bool _isLoadingMore = false;
+  int _currentPage = 1;
+  final int _articlesPerPage = 10;
+  List<Article> _allArticles = [];
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     _article = _loadCachedArticle();
+    _scrollController.addListener(_scrollListener);
   }
 
   Future<List<Article>> _loadCachedArticle() async {
@@ -44,10 +49,10 @@ class _ArticleScreenState extends State<ArticleScreen> {
       print('Error loading cached article: $e');
     }
     // If cached data not found or error occurred, fetch it from the network
-    return _fetchArticle();
+    return _fetchArticle(1);
   }
 
-  Future<List<Article>> _fetchArticle() async {
+  Future<List<Article>> _fetchArticle(int page) async {
     try {
       String githubRawUrl = 'https://raw.githubusercontent.com/yehtutoo2022/NCDs/master/assets/article_data.json';
       final response = await http.get(Uri.parse(githubRawUrl));
@@ -63,7 +68,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
         setState(() {
           _isLoading = false;
         });
-        return articleList;
+        return articleList.skip((page - 1) * _articlesPerPage).take(_articlesPerPage).toList();
       } else {
         throw Exception('Failed to load article');
       }
@@ -79,13 +84,42 @@ class _ArticleScreenState extends State<ArticleScreen> {
   void _updateCategories(List<Article> articles) {
     setState(() {
       _categories = ['All'] + articles.map((e) => e.category).toSet().toList();
+      _categories.sort();
     });
   }
 
   Future<void> _refreshArticle() async {
     setState(() {
-      _article = _fetchArticle();
+      //added
+      _currentPage = 1;
+      _allArticles.clear();
+
+      _article = _fetchArticle(_currentPage);
     });
+  }
+
+  Future<void> _loadMoreArticles() async {
+    if (!_isLoadingMore) {
+      setState(() {
+        _isLoadingMore = true;
+      });
+      List<Article> moreArticles = await _fetchArticle(_currentPage + 1);
+      if (moreArticles.isNotEmpty) {
+        setState(() {
+          _currentPage++;
+          _allArticles.addAll(moreArticles);
+        });
+      }
+      setState(() {
+        _isLoadingMore = false;
+      });
+    }
+  }
+
+  void _scrollListener() {
+    if (_scrollController.position.extentAfter < 500) {
+      _loadMoreArticles();
+    }
   }
 
   void _showFilterDialog() {
@@ -100,7 +134,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
                 return RadioListTile<String>(
                   title: Text(
                       category,
-                      style: TextStyle(fontSize: 14)
+                      style: const TextStyle(fontSize: 14)
                   ),
                   value: category,
                   groupValue: _selectedCategory,
@@ -120,18 +154,25 @@ class _ArticleScreenState extends State<ArticleScreen> {
   }
 
   @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
           Locales.string(context, "articles"),
-          style: TextStyle(color: Colors.black),
+          style: const TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.brown[100],
         actions: [
           IconButton(
-            icon: const Icon(Icons.filter_list),
-            onPressed: _showFilterDialog, // Show filter dialog on tap
+            icon: const Icon(Icons.filter_list_alt),
+            onPressed: _showFilterDialog,
           ),
           IconButton(
             icon: const Icon(Icons.bookmarks_outlined),
@@ -169,14 +210,28 @@ class _ArticleScreenState extends State<ArticleScreen> {
             );
           } else {
             List<Article> articles = snapshot.data!;
+            if (_currentPage == 1) {
+              _allArticles = articles;
+            } else {
+              _allArticles.addAll(articles);
+            }
             List<Article> filteredArticles = _selectedCategory == 'All'
                 ? articles
                 : articles.where((article) => article.category == _selectedCategory).toList();
             return RefreshIndicator(
               onRefresh: _refreshArticle,
               child: ListView.builder(
-                itemCount: filteredArticles.length,
+                controller: _scrollController,
+                itemCount: filteredArticles.length + (_isLoadingMore ? 1 : 0),
                 itemBuilder: (context, index) {
+                  if (index == filteredArticles.length) {
+                    return const Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
                   return ArticleCard(article: filteredArticles[index]);
                 },
               ),
@@ -188,85 +243,5 @@ class _ArticleScreenState extends State<ArticleScreen> {
   }
 }
 
-class ArticleCard extends StatelessWidget {
-  final Article article;
 
-  const ArticleCard({required this.article});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width / 4,
-      child: Card(
-        elevation: 3,
-        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        child: Stack(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ArticleDetailScreen(article: article),
-                  ),
-                );
-              },
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: CachedNetworkImage(
-                  imageUrl: article.imageUrl,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: 200,
-                  placeholder: (context, url) => Container(
-                    width: double.infinity,
-                    height: 200,
-                    color: Colors.grey,
-                  ),
-                  errorWidget: (context, url, error) => Container(
-                    width: double.infinity,
-                    height: 200,
-                    color: Colors.grey,
-                    child: Icon(Icons.error, color: Colors.white),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(8),
-                    bottomRight: Radius.circular(8),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          article.title,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Icon(Icons.arrow_forward_ios),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 

@@ -9,7 +9,7 @@ import '../model/bookmark_provider.dart';
 class ArticleDetailScreen extends StatefulWidget {
   final Article article;
 
-  ArticleDetailScreen({required this.article});
+  const ArticleDetailScreen({super.key, required this.article});
 
   @override
   State<ArticleDetailScreen> createState() => _ArticleDetailScreenState();
@@ -102,14 +102,14 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
             itemBuilder: (BuildContext context) => <PopupMenuEntry>[
               PopupMenuItem(
                 child: ListTile(
-                  leading: Icon(Icons.zoom_in),
+                  leading: const Icon(Icons.zoom_in),
                   title: Text(Locales.string(context, "font-increase")),
                   onTap: _increaseExpansionFontSize,
                 ),
               ),
               PopupMenuItem(
                 child: ListTile(
-                  leading: Icon(Icons.zoom_out),
+                  leading: const Icon(Icons.zoom_out),
                   title: Text(Locales.string(context, "font-decrease")),
                   onTap: _decreaseExpansionFontSize,
                 ),
@@ -138,7 +138,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                 ),
                 errorWidget: (context, url, error) => Container(
                   color: Colors.grey, // or any other error widget you prefer
-                  child: Icon(Icons.error, color: Colors.white), // optional error icon
+                  child: const Icon(Icons.error, color: Colors.white), // optional error icon
                 ),
               ),
             ),

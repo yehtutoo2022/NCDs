@@ -18,27 +18,27 @@ class BookmarkScreen extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Remove from Bookmarks'),
-            content: Text('Are you sure you want to remove this article from bookmarks?'),
+            title: const Text('Remove from Bookmarks'),
+            content: const Text('Are you sure you want to remove this article from bookmarks?'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('Cancel'),
+                child: const Text('Cancel'),
               ),
               TextButton(
                 onPressed: () {
                   Provider.of<BookmarkProvider>(context, listen: false).deleteBookmark(article);
                   Navigator.of(context).pop();
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
+                    const SnackBar(
                       content: Text('Article removed from bookmarks'),
                       duration: Duration(seconds: 2),
                     ),
                   );
                 },
-                child: Text('Remove'),
+                child: const Text('Remove'),
               ),
             ],
           );
@@ -50,7 +50,7 @@ class BookmarkScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           Locales.string(context, "bookmarks"),
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
           ),
         ),

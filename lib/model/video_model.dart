@@ -1,28 +1,3 @@
-// class Video {
-//   final String category;
-//   final String source;
-//   final String title;
-//   final String content;
-//   final String videoUrl;
-//
-//   Video({
-//     required this.category,
-//     required this.source,
-//     required this.title,
-//     required this.content,
-//     required this.videoUrl,
-//   });
-//
-//   factory Video.fromJson(Map<String, dynamic> json) {
-//     return Video(
-//       category: json['Category'] as String,
-//       source: json['Source'] as String,
-//       title: json['Title'] as String,
-//       content: json['Content'] as String,
-//       videoUrl: json['Video Url'] as String,
-//     );
-//   }
-// }
 class Video {
   final String category;
   final String source;
