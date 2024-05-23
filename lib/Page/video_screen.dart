@@ -97,12 +97,30 @@ class VideoCard extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: Column(
         children: [
-          Image.network(
-            thumbnailUrl,
-            fit: BoxFit.cover,
-            width: double.infinity,
-            height: 200,
+          Stack(
+            children: [
+              Image.network(
+                video.imageThumbnail,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: 200,
+              ),
+              Positioned(
+                top: 0,
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: Icon(
+                    Icons.play_circle_outline,
+                    color: Colors.white,
+                    size: 64.0,
+                  ),
+                ),
+              ),
+            ],
           ),
+
           ListTile(
             title: Text(video.title),
             subtitle: Text(video.content),
