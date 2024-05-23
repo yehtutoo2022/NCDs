@@ -1,5 +1,13 @@
 [
   {
+    "Category": "Diabetes",
+    "Source": "Youtube",
+    "Title": "ဘယ်လက္ခဏာတွေပြရင် ဆီးချိုရောဂါဖြစ်တတ်လဲ?",
+    "Content": "ဒီဗီဒီယိုမှာတော့ ဆီးချိုသမားတွေမှာ ဖြစ်တတ်တဲ့ လက္ခဏာ ၁၀ ချက်ကို ဖော်ပြပေးလိုက်ပါတယ်။\nဗီဒီယိုကို အသေးစိတ်လေ့လာ ကြည့်ရှုနိုင်ပါတယ်။",
+    "Video Url": "https://www.youtube.com/watch?v=C-tc8Rv6SRA",
+    "Image Thumbnail": "https://raw.githubusercontent.com/yehtutoo2022/NCDs/master/assets/video_thumbnails/diabetes_drhtet.png"
+  },
+  {
     "Category": "Hypetension",
     "Source": "Youtube",
     "Title": "သွေးတိုးရောဂါနှင့် သဘာဝဆေးဝါးများ",

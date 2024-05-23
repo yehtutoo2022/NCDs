@@ -19,7 +19,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
   late Future<List<Article>> _article;
   bool _isLoading = true;
   String _selectedCategory = 'All';
-  List<String> _categories = ['All']; // Initial category list
+  List<String> _categories = ['All'];
 
   @override
   void initState() {

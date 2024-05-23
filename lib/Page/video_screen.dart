@@ -14,6 +14,10 @@ class VideoScreen extends StatefulWidget {
 class _VideoScreenState extends State<VideoScreen> {
   late Future<List<Video>> _video;
   bool _isLoading = true;
+  List<Video> _allVideos = [];
+  List<Video> _filteredVideos = [];
+  String _selectedCategory = 'All';
+  List<String> _categories = ['All'];
 
   @override
   void initState() {
@@ -32,6 +36,11 @@ class _VideoScreenState extends State<VideoScreen> {
 
         setState(() {
           _isLoading = false;
+          _allVideos = videoList;
+          _filteredVideos = videoList;
+          _categories.addAll(
+            videoList.map((video) => video.category).toSet().toList(),
+          );
         });
         return videoList;
       } else {
@@ -46,6 +55,44 @@ class _VideoScreenState extends State<VideoScreen> {
     }
   }
 
+  void _filterVideos() {
+    if (_selectedCategory == 'All') {
+      _filteredVideos = _allVideos;
+    } else {
+      _filteredVideos = _allVideos.where((video) => video.category == _selectedCategory).toList();
+    }
+  }
+
+  void _showFilterDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Filter'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: _categories.map((String category) {
+                return RadioListTile<String>(
+                  title: Text(
+                      category,
+                      style: TextStyle(fontSize: 14)
+                  ),
+                  value: category,
+                  groupValue: _selectedCategory,
+                  onChanged: (String? value) {
+                    setState(() {
+                      _selectedCategory = value!;
+                      Navigator.of(context).pop(); // Close the dialog
+                    });
+                  },
+                );
+              }).toList(),
+            ),
+          ),
+        );
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +100,15 @@ class _VideoScreenState extends State<VideoScreen> {
         title: Text(
           Locales.string(context, "videos"),
         ),
+        backgroundColor: Colors.brown[100],
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.filter_list),
+            onPressed: _showFilterDialog, // Show filter dialog on tap
+          ),
+        ],
       ),
+      backgroundColor: Colors.brown[100],
       body: FutureBuilder<List<Video>>(
         future: _video,
         builder: (context, snapshot) {
@@ -72,9 +127,9 @@ class _VideoScreenState extends State<VideoScreen> {
           } else {
             List<Video>? videos = snapshot.data;
             return ListView.builder(
-              itemCount: videos!.length,
+              itemCount: _filteredVideos.length,
               itemBuilder: (context, index) {
-               return VideoCard(video: videos[index]);
+                return VideoCard(video: _filteredVideos[index]);
               },
             );
           }
@@ -133,8 +188,20 @@ class VideoCard extends StatelessWidget {
           ),
 
           ListTile(
-            title: Text(video.title),
-            subtitle: Text(video.content),
+            title: Text(
+              video.title,
+              style: TextStyle(
+                fontSize: 18.0,
+                color: Colors.blue,
+              ),
+            ),
+            subtitle: Text(
+              video.content,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.grey,
+              ),
+            ),
             onTap: () {
               Navigator.push(
                 context,
