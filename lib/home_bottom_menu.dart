@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ncd_myanmar/Page/articles_screen.dart';
+import 'package:ncd_myanmar/Page/video_screen.dart';
 import 'Page/home_page.dart';
 import 'Settings/notifications_screen.dart';
 import 'Settings/setting_page.dart';
@@ -17,7 +18,7 @@ class _HomeMenuState extends State<HomeMenu> {
   final List<Widget> _screens = [
     HomeScreen(),
     ArticleScreen(),
-    NotificationScreen(),
+    VideoScreen(),
     SettingsPage(),
   ];
 
@@ -42,8 +43,8 @@ class _HomeMenuState extends State<HomeMenu> {
             label: 'Articles',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notifications',
+            icon: Icon(Icons.movie),
+            label: 'Videos',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.menu),
