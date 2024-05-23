@@ -90,7 +90,6 @@ class VideoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String thumbnailUrl = 'https://img.youtube.com/vi/${video.videoId}/mqdefault.jpg';
 
     return Card(
       elevation: 2,

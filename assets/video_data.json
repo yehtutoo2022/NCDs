@@ -5,7 +5,7 @@
     "Title": "Intro about Hypertension",
     "Content": "This is content of hypertension",
     "Video Url": "https://www.youtube.com/watch?v=zHNKPuODkwQ",
-    "Image Thumbnail": " "
+    "Image Thumbnail": "https://www.shutterstock.com/image-photo/doctor-using-sphygmomanometer-stethoscope-checking-260nw-1192949827.jpg"
   },
   {
     "Category": "Hypetension",
@@ -13,6 +13,6 @@
     "Title": "Second Video",
     "Content": "Second Test",
     "Video Url": "https://www.youtube.com/watch?v=74ykov5wqgg",
-    "Image Thumbnail": " "
+    "Image Thumbnail": ""
   }
 ]
