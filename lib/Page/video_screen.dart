@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_locales/flutter_locales.dart';
 import 'package:http/http.dart' as http;
@@ -96,28 +97,39 @@ class VideoCard extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: Column(
         children: [
-          Stack(
-            children: [
-              Image.network(
-                video.imageThumbnail,
-                fit: BoxFit.cover,
-                width: double.infinity,
-                height: 200,
-              ),
-              Positioned(
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: Center(
-                  child: Icon(
-                    Icons.play_circle_outline,
-                    color: Colors.white,
-                    size: 64.0,
+
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => YoutubePlayerScreen(videoId: video.videoId),
+                ),
+              );
+            },
+            child: Stack(
+              children: [
+                Image.network(
+                  video.imageThumbnail,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: 200,
+                ),
+                Positioned(
+                  top: 0,
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                    child: Icon(
+                      Icons.play_circle_outline,
+                      color: Colors.white,
+                      size: 64.0,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
 
           ListTile(
