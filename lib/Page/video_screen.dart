@@ -94,6 +94,13 @@ class _VideoScreenState extends State<VideoScreen> {
       },
     );
   }
+
+  Future<void> _refreshVideos() async {
+    setState(() {
+      _video = _fetchVideo();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,7 +112,7 @@ class _VideoScreenState extends State<VideoScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.filter_list),
-            onPressed: _showFilterDialog, // Show filter dialog on tap
+            onPressed: _showFilterDialog,
           ),
         ],
       ),
@@ -127,11 +134,14 @@ class _VideoScreenState extends State<VideoScreen> {
             );
           } else {
             List<Video>? videos = snapshot.data;
-            return ListView.builder(
-              itemCount: _filteredVideos.length,
-              itemBuilder: (context, index) {
-                return VideoCard(video: _filteredVideos[index]);
-              },
+            return RefreshIndicator(
+              onRefresh: _refreshVideos,
+              child: ListView.builder(
+                itemCount: _filteredVideos.length,
+                itemBuilder: (context, index) {
+                  return VideoCard(video: _filteredVideos[index]);
+                },
+              ),
             );
           }
         },
