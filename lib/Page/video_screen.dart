@@ -82,6 +82,7 @@ class _VideoScreenState extends State<VideoScreen> {
                   onChanged: (String? value) {
                     setState(() {
                       _selectedCategory = value!;
+                      _filterVideos();
                       Navigator.of(context).pop(); // Close the dialog
                     });
                   },
