@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ncd_myanmar/Page/articles_screen.dart';
 import 'package:ncd_myanmar/Page/video_screen.dart';
 import 'Page/home_page.dart';
-import 'Settings/notifications_screen.dart';
 import 'Settings/setting_page.dart';
 
 class HomeMenu extends StatefulWidget {
